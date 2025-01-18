@@ -1,10 +1,12 @@
 "use client";
 
 import { memo, useCallback, useEffect, useState } from "react";
+import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { saveAs } from "file-saver";
 import html2canvas from "html2canvas";
+import { FaCheck, FaLink, FaLinkedin, FaTwitter } from "react-icons/fa";
 import ReturnButton from "~~/components/common/ReturnButton";
 import Cert1 from "~~/components/common/tipoCertificados/cert1";
 import { Address } from "~~/components/scaffold-eth";
@@ -333,6 +335,22 @@ const VerCertificado = memo(
 
     const index = certs.findIndex((cert: any) => Number(cert[2].idCertificado).toString() === certSelected);
 
+    const [location, setLocation] = useState("");
+
+    useEffect(() => {
+      setTimeout(function () {
+        setLocation(window.location.href);
+      }, 500);
+    }, []);
+
+    const [copiado, setCopiado] = useState(false);
+
+    const handleCopy = () => {
+      navigator.clipboard.writeText(location);
+      setCopiado(true);
+      setTimeout(() => setCopiado(false), 1200);
+    };
+
     if (certs[index] && open)
       return (
         <Dialog
@@ -368,8 +386,31 @@ const VerCertificado = memo(
                 nombreCertificador={certs[index][3].nombreCertificador}
               />
             </div>
-            <DialogFooter>
-              <Button onClick={handleDownload} disabled={loading}>
+            <DialogFooter className="flex flex-row gap-2">
+              <button onClick={handleCopy} className="self-center">
+                {copiado ? (
+                  <FaCheck className="w-8 h-8" />
+                ) : (
+                  <FaLink className="w-8 h-8" onClick={handleCopy} title="Copiar enlace" />
+                )}
+              </button>
+              <Link
+                href={`https://twitter.com/intent/tweet?url=${location}`}
+                target="_blank"
+                className="self-center"
+                title="Compartir en Twitter"
+              >
+                <FaTwitter className="w-9 h-9" />
+              </Link>
+              <Link
+                href={`https://www.linkedin.com/shareArticle?mini=true&url=${location}`}
+                target="_blank"
+                className="self-center"
+                title="Compartir en LinkedIn"
+              >
+                <FaLinkedin className="w-9 h-9" />
+              </Link>
+              <Button onClick={handleDownload} disabled={loading} title="Descargar Certificado">
                 {loading ? "Descargando..." : "Descargar"}
               </Button>
             </DialogFooter>
