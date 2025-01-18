@@ -115,9 +115,9 @@ export function Componente() {
   // }, [mostrarArregloCursosPorCategoria]);
 
   useEffect(() => {
-    if (!catSeleccionada) return;
+    if (!catSeleccionada || !mostrarArregloCursosPorCategoria) return;
     dataCursos(catSeleccionada, mostrarArregloCursosPorCategoria[catSeleccionada]);
-  }, [catSeleccionada, dataCursos, mostrarArregloCursosPorCategoria]);
+  }, [catSeleccionada]);
 
   const { writeContractAsync: modificarCurso } = useScaffoldWriteContract("Certificados");
 

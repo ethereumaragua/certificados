@@ -79,9 +79,9 @@ export function Componente() {
   }, [mostrarArregloDeCategorias]);
 
   useEffect(() => {
-    if (!catSeleccionada) return;
+    if (!catSeleccionada || !mostrarArregloCursosPorCategoria) return;
     dataCursos(catSeleccionada, mostrarArregloCursosPorCategoria[catSeleccionada]);
-  }, [catSeleccionada, dataCursos, mostrarArregloCursosPorCategoria]);
+  }, [catSeleccionada]);
 
   const { writeContractAsync: eliminarCertificadoAddress } = useScaffoldWriteContract("Certificados");
 
