@@ -325,18 +325,10 @@ const VerCertificado = memo(
 
     const index = certs.findIndex((cert: any) => Number(cert[2].idCertificado).toString() === certSelected);
 
-    const [location, setLocation] = useState("");
-
-    useEffect(() => {
-      setTimeout(function () {
-        setLocation(window.location.href);
-      }, 500);
-    }, []);
-
     const [copiado, setCopiado] = useState(false);
 
     const handleCopy = () => {
-      navigator.clipboard.writeText(location);
+      navigator.clipboard.writeText(window.location.href);
       setCopiado(true);
       setTimeout(() => setCopiado(false), 1200);
     };
@@ -385,7 +377,7 @@ const VerCertificado = memo(
                 )}
               </button>
               <Link
-                href={`https://twitter.com/intent/tweet?url=${location}`}
+                href={`https://twitter.com/intent/tweet?url=${window.location.href}`}
                 target="_blank"
                 className="self-center"
                 title="Compartir en Twitter"
@@ -393,7 +385,7 @@ const VerCertificado = memo(
                 <FaTwitter className="w-9 h-9" />
               </Link>
               <Link
-                href={`https://www.linkedin.com/shareArticle?mini=true&url=${location}`}
+                href={`https://www.linkedin.com/shareArticle?mini=true&url=${window.location.href}`}
                 target="_blank"
                 className="self-center"
                 title="Compartir en LinkedIn"
