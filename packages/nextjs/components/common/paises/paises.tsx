@@ -782,7 +782,7 @@ const paises = [
   {
     value: "195",
     label: "Otro",
-  }
+  },
 ];
 
 export default paises;

@@ -5,9 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Bars3Icon } from "@heroicons/react/24/outline";
-import { 
-  // FaucetButton, 
-  RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
+import {
+  // FaucetButton,
+  RainbowKitCustomConnectButton,
+} from "~~/components/scaffold-eth";
 import { Button } from "~~/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "~~/components/ui/dropdown-menu";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
@@ -17,7 +18,7 @@ type HeaderMenuLink = {
   label: string;
   href: string;
   icon?: React.ReactNode;
-  target?: boolean
+  target?: boolean;
 };
 
 export const menuLinks: HeaderMenuLink[] = [
@@ -28,7 +29,7 @@ export const menuLinks: HeaderMenuLink[] = [
   {
     label: "Ethereum Aragua",
     href: "https://aragua.org",
-    target: true
+    target: true,
   },
 ];
 
@@ -79,7 +80,12 @@ export const Header = () => {
         <div className="lg:hidden" ref={burgerMenuRef}>
           <DropdownMenu open={isDrawerOpen}>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className={cn("px-2", isDrawerOpen && "bg-secondary")} onClick={() => setIsDrawerOpen(!isDrawerOpen)}>
+              <Button
+                variant="ghost"
+                size="sm"
+                className={cn("px-2", isDrawerOpen && "bg-secondary")}
+                onClick={() => setIsDrawerOpen(!isDrawerOpen)}
+              >
                 <Bars3Icon className="w-6 h-6" />
               </Button>
             </DropdownMenuTrigger>

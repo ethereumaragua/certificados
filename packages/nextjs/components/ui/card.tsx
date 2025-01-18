@@ -5,11 +5,17 @@ interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   innerClassName?: string;
 }
 
-const Card = React.forwardRef<HTMLDivElement, CardProps>(({ className,innerClassName, ...props }, ref) => (
+const Card = React.forwardRef<HTMLDivElement, CardProps>(({ className, innerClassName, ...props }, ref) => (
   // <div ref={ref} className={cn("rounded-lg border bg-card text-card-foreground shadow-sm", className)} {...props} />
 
   // bg-gradient-to-tr from-pink-300 to-blue-300
-  <div ref={ref} className={cn('rounded-lg  bg-gradient-to-bl from-purple-500 via-indigo-500 to-blue-500    p-1 hover:shadow-xl', className)}>
+  <div
+    ref={ref}
+    className={cn(
+      "rounded-lg  bg-gradient-to-bl from-purple-500 via-indigo-500 to-blue-500    p-1 hover:shadow-xl",
+      className,
+    )}
+  >
     <div className={cn("rounded-lg bg-card text-card-foreground", innerClassName)} {...props} />
   </div>
 ));

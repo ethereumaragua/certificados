@@ -1,17 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import ReturnButton from "~~/components/common/ReturnButton";
 import Paises from "~~/components/common/paises";
 import { Button } from "~~/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~~/components/ui/card";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "~~/components/ui/form";
 import { Input } from "~~/components/ui/input";
 import { useScaffoldContract } from "~~/hooks/scaffold-eth";
-import { useRouter } from 'next/navigation'
-import ReturnButton from "~~/components/common/ReturnButton";
 
 const formSchema = z.object({
   pais: z.string().min(1, {
@@ -54,13 +54,12 @@ export default function CardWithForm() {
 
   const router = useRouter();
 
-  const estaCertificado = async(pais:string, id:string) => {
-    try{
-      let a = await certificadosContract?.read.datosYCertificadosUsuario([Number(pais), BigInt(id)]);
-      if(a && a[0].length > 0) {
+  const estaCertificado = async (pais: string, id: string) => {
+    try {
+      const a = await certificadosContract?.read.datosYCertificadosUsuario([Number(pais), BigInt(id)]);
+      if (a && a[0].length > 0) {
         router.push(`/usuario/id/${pais}/${id}`);
-      }
-      else {
+      } else {
         alert("Este usuario no posee certificados");
         setLoading(false);
       }
@@ -69,16 +68,20 @@ export default function CardWithForm() {
       console.log(error);
       setLoading(false);
     }
-  }
+  };
 
   return (
     <>
-      <div className="pt-10 pl-10"><ReturnButton ruta="/usuario"/></div>
+      <div className="pt-10 pl-10">
+        <ReturnButton ruta="/usuario" />
+      </div>
       <div className="flex justify-center mt-8 sm:mt-4">
         <Card className="w-full mx-10 sm:w-[400px]">
           <CardHeader>
             <CardTitle>Ver por ID</CardTitle>
-            <CardDescription>Busca las certificaciones de un usuario usando su identificación nacional.</CardDescription>
+            <CardDescription>
+              Busca las certificaciones de un usuario usando su identificación nacional.
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <Form {...form}>
@@ -118,7 +121,9 @@ export default function CardWithForm() {
                   <Button variant="outline" onClick={e => handleClick(e)}>
                     Reset
                   </Button>
-                  <Button type="submit" disabled={loading}>{loading ? 'Buscando...' : 'Buscar'}</Button>
+                  <Button type="submit" disabled={loading}>
+                    {loading ? "Buscando..." : "Buscar"}
+                  </Button>
                 </div>
               </form>
             </Form>

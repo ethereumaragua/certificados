@@ -7,9 +7,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~~/com
 
 const ReturnButton = ({ ruta }: { ruta: string }) => {
   return (
-    <Link
-      href={ruta}
-    >
+    <Link href={ruta}>
       <TooltipProvider>
         <Tooltip delayDuration={0}>
           <TooltipTrigger asChild>

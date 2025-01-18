@@ -1,33 +1,22 @@
-"use client"
+"use client";
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Button } from "~~/components/ui/button"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "~~/components/ui/form"
-import { Input } from "~~/components/ui/input"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Button } from "~~/components/ui/button";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "~~/components/ui/form";
+import { Input } from "~~/components/ui/input";
 import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
 const formSchema = z.object({
-  admin: z
-    .string()
-    .length(42, {
-      message: "El address debe tener 42 caracteres.",
-    })
-})
+  admin: z.string().length(42, {
+    message: "El address debe tener 42 caracteres.",
+  }),
+});
 
-type FormValores = z.infer<typeof formSchema>
+type FormValores = z.infer<typeof formSchema>;
 
 export function Componente() {
-
   const { writeContractAsync: removerAdmin } = useScaffoldWriteContract("Certificados");
 
   const transaccion = async (admin: string) => {
@@ -60,10 +49,10 @@ export function Componente() {
       admin: "",
     },
     mode: "onSubmit",
-  })
+  });
 
   function onSubmit(data: FormValores) {
-    console.log(JSON.stringify(data, null, 2))
+    console.log(JSON.stringify(data, null, 2));
     transaccion(data.admin);
   }
 
@@ -79,9 +68,7 @@ export function Componente() {
               <FormControl>
                 <Input placeholder="0x123..." {...field} />
               </FormControl>
-              <FormDescription>
-                Esta es la dirección ethereum del Admin.
-              </FormDescription>
+              <FormDescription>Esta es la dirección ethereum del Admin.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -89,5 +76,5 @@ export function Componente() {
         <Button type="submit">Remover Admin</Button>
       </form>
     </Form>
-  )
+  );
 }

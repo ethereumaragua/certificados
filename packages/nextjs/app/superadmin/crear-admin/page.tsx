@@ -1,5 +1,5 @@
-import { Separator } from "~~/components/ui/separator"
-import { Componente } from "./form"
+import { Componente } from "./form";
+import { Separator } from "~~/components/ui/separator";
 
 export default function Page() {
   return (
@@ -13,5 +13,5 @@ export default function Page() {
       <Separator />
       <Componente />
     </div>
-  )
+  );
 }

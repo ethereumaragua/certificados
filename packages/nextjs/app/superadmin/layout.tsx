@@ -1,13 +1,12 @@
-import { Metadata } from "next"
-
-import { Separator } from "~~/components/ui/separator"
-import { SidebarNav } from "./components/sidebar-nav"
-import ReturnButton from "~~/components/common/ReturnButton"
+import { SidebarNav } from "./components/sidebar-nav";
+import { Metadata } from "next";
+import ReturnButton from "~~/components/common/ReturnButton";
+import { Separator } from "~~/components/ui/separator";
 
 export const metadata: Metadata = {
   title: "Super Admin",
   description: "All superadmin tasks.",
-}
+};
 
 const sidebarNavItems = [
   {
@@ -30,16 +29,17 @@ const sidebarNavItems = [
     title: "Modificar Cuenta Admin",
     href: "/superadmin/modificar-cuenta-admin",
   },
-]
+];
 
-export default function AdminLayout({ children }: {children: React.ReactNode}) {
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="p-10 pb-16 space-y-6 ">
-      <ReturnButton ruta="/"/>
+      <ReturnButton ruta="/" />
       <div className="space-y-0.5">
         <h2 className="text-2xl font-bold tracking-tight">Página de Super Admin</h2>
         <p className="text-muted-foreground">
-          Maneja tareas de Super Administrador: crea Administradores que tengan la capacidad de crear categorías y cursos, gestiona los roles y verifica los eventos.
+          Maneja tareas de Super Administrador: crea Administradores que tengan la capacidad de crear categorías y
+          cursos, gestiona los roles y verifica los eventos.
         </p>
       </div>
       <Separator className="my-6" />
@@ -50,5 +50,5 @@ export default function AdminLayout({ children }: {children: React.ReactNode}) {
         <div className="flex-1 lg:max-w-2xl">{children}</div>
       </div>
     </div>
-  )
+  );
 }

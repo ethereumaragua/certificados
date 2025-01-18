@@ -1,19 +1,14 @@
-"use client"
+"use client";
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useEffect, useState } from "react"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Button } from "~~/components/ui/button"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "~~/components/ui/form"
+import { useEffect, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Button } from "~~/components/ui/button";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "~~/components/ui/form";
+import { Input } from "~~/components/ui/input";
+import { Label } from "~~/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "~~/components/ui/radio-group";
 import {
   Select,
   SelectContent,
@@ -22,17 +17,13 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "~~/components/ui/select"
-import { Input } from "~~/components/ui/input"
-import { Label } from "~~/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "~~/components/ui/radio-group"
+} from "~~/components/ui/select";
 import { useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
 const formSchema = z.object({
-  categoria: z
-    .string({
-      required_error: "Por favor seleccione una categoría.",
-    }),
+  categoria: z.string({
+    required_error: "Por favor seleccione una categoría.",
+  }),
   nombre: z
     .string()
     .min(2, {
@@ -41,24 +32,22 @@ const formSchema = z.object({
     .max(64, {
       message: "Nombre no debe tener más de 64 caracteres.",
     }),
-  estado: z
-    .string()
-})
+  estado: z.string(),
+});
 
-type FormValores = z.infer<typeof formSchema>
+type FormValores = z.infer<typeof formSchema>;
 
 export function Componente() {
-
   const [mounted, setMounted] = useState(false);
   const [arregloCategorias, setArregloCategorias] = useState<any>();
-  
+
   const { data: mostrarArregloDeCategorias }: { data: any } = useScaffoldReadContract({
     contractName: "Certificados",
     functionName: "mostrarArregloDeCategorias",
   });
 
   useEffect(() => {
-    if(!mostrarArregloDeCategorias) return
+    if (!mostrarArregloDeCategorias) return;
     setMounted(true);
     setArregloCategorias(mostrarArregloDeCategorias);
     console.log(mostrarArregloDeCategorias);
@@ -96,13 +85,13 @@ export function Componente() {
     defaultValues: {
       categoria: undefined,
       nombre: "",
-      estado: "true"
+      estado: "true",
     },
     mode: "onSubmit",
-  })
+  });
 
   function onSubmit(data: FormValores) {
-    console.log(JSON.stringify(data, null, 2))
+    console.log(JSON.stringify(data, null, 2));
     transaccion(Number(data.categoria), data.nombre, data.estado === "true" ? true : false);
   }
 
@@ -143,9 +132,7 @@ export function Componente() {
                     }}
                   /> */}
                 </FormControl>
-                <FormDescription>
-                  Esta es la Categoría a modificar.
-                </FormDescription>
+                <FormDescription>Esta es la Categoría a modificar.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -159,9 +146,7 @@ export function Componente() {
                 <FormControl>
                   <Input placeholder="Mecánica..." {...field} />
                 </FormControl>
-                <FormDescription>
-                  Este es el nombre nuevo de la categoria.
-                </FormDescription>
+                <FormDescription>Este es el nombre nuevo de la categoria.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -173,7 +158,7 @@ export function Componente() {
               <FormItem>
                 <FormLabel>Estado</FormLabel>
                 <FormControl>
-                  <RadioGroup onValueChange={field.onChange} defaultValue={(field.value).toString()}>
+                  <RadioGroup onValueChange={field.onChange} defaultValue={field.value.toString()}>
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value={"true"} id="r1" />
                       <Label htmlFor="r1">Activo</Label>
@@ -184,9 +169,7 @@ export function Componente() {
                     </div>
                   </RadioGroup>
                 </FormControl>
-                <FormDescription>
-                  Este es el nuevo estado de la categoria.
-                </FormDescription>
+                <FormDescription>Este es el nuevo estado de la categoria.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -194,6 +177,6 @@ export function Componente() {
           <Button type="submit">Modificar Categoría</Button>
         </form>
       </Form>
-    )
+    );
   }
 }

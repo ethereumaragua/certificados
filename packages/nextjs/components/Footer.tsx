@@ -9,6 +9,7 @@ import { BuidlGuidlLogo } from "~~/components/assets/BuidlGuidlLogo";
 // import { Button } from "~~/components/ui/button";
 import { useTargetNetwork } from "~~/hooks/scaffold-eth/useTargetNetwork";
 import { cn } from "~~/lib/utils";
+
 // import { useGlobalState } from "~~/services/store/store";
 
 /**
@@ -50,7 +51,6 @@ export const Footer = () => {
       <div className="w-full">
         <nav className="w-full">
           <div className="flex items-center justify-center w-full gap-2 text-sm">
-            
             <div className="text-center">
               <a
                 href="https://t.me/ETHAragua"

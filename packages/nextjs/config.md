@@ -1,31 +1,31 @@
-/** @type {import('tailwindcss').Config} */
+/** @type {import('tailwindcss').Config} \*/
 module.exports = {
-  content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}", "./utils/**/*.{js,ts,jsx,tsx}"],
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  plugins: [require("daisyui")],
-  darkTheme: "dark",
-  darkMode: ["selector", "[data-theme='dark']"],
-  // DaisyUI theme colors
-  daisyui: {
-    themes: [
-      {
-        light: {
-          primary: "#93BBFB",
-          "primary-content": "#212638",
-          secondary: "#DAE8FF",
-          "secondary-content": "#212638",
-          accent: "#93BBFB",
-          "accent-content": "#212638",
-          neutral: "#212638",
-          "neutral-content": "#ffffff",
-          "base-100": "#ffffff",
-          "base-200": "#f4f8ff",
-          "base-300": "#DAE8FF",
-          "base-content": "#212638",
-          info: "#93BBFB",
-          success: "#34EEB6",
-          warning: "#FFCF72",
-          error: "#FF8863",
+content: ["./app/**/_.{js,ts,jsx,tsx}", "./components/\*\*/_.{js,ts,jsx,tsx}", "./utils/\*_/_.{js,ts,jsx,tsx}"],
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+plugins: [require("daisyui")],
+darkTheme: "dark",
+darkMode: ["selector", "[data-theme='dark']"],
+// DaisyUI theme colors
+daisyui: {
+themes: [
+{
+light: {
+primary: "#93BBFB",
+"primary-content": "#212638",
+secondary: "#DAE8FF",
+"secondary-content": "#212638",
+accent: "#93BBFB",
+"accent-content": "#212638",
+neutral: "#212638",
+"neutral-content": "#ffffff",
+"base-100": "#ffffff",
+"base-200": "#f4f8ff",
+"base-300": "#DAE8FF",
+"base-content": "#212638",
+info: "#93BBFB",
+success: "#34EEB6",
+warning: "#FFCF72",
+error: "#FF8863",
 
           "--rounded-btn": "9999rem",
 
@@ -74,15 +74,16 @@ module.exports = {
         },
       },
     ],
-  },
-  theme: {
-    extend: {
-      boxShadow: {
-        center: "0 0 12px -2px rgb(0 0 0 / 0.05)",
-      },
-      animation: {
-        "pulse-fast": "pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-      },
-    },
-  },
+
+},
+theme: {
+extend: {
+boxShadow: {
+center: "0 0 12px -2px rgb(0 0 0 / 0.05)",
+},
+animation: {
+"pulse-fast": "pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+},
+},
+},
 };

@@ -1,23 +1,21 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import ReturnButton from "~~/components/common/ReturnButton";
 import Paises from "~~/components/common/paises";
 import { Button } from "~~/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~~/components/ui/card";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "~~/components/ui/form";
 import { Input } from "~~/components/ui/input";
 import { useScaffoldContract } from "~~/hooks/scaffold-eth";
-import { useRouter } from 'next/navigation'
-import ReturnButton from "~~/components/common/ReturnButton";
 
 const formSchema = z.object({
-  address: z
-    .string()
-    .length(42, {
-      message: "El address debe tener 42 caracteres.",
+  address: z.string().length(42, {
+    message: "El address debe tener 42 caracteres.",
   }),
 });
 
@@ -52,13 +50,12 @@ export default function CardWithForm() {
 
   const router = useRouter();
 
-  const estaCertificadoAddress = async(address:string) => {
-    try{
-      let a = await certificadosContract?.read.datosYCertificadosUsuarioAddress([address]);
-      if(a && a[0].length > 0) {
+  const estaCertificadoAddress = async (address: string) => {
+    try {
+      const a = await certificadosContract?.read.datosYCertificadosUsuarioAddress([address]);
+      if (a && a[0].length > 0) {
         router.push(`/usuario/address/${address}`);
-      }
-      else {
+      } else {
         alert("Este usuario no posee certificados");
         setLoading(false);
       }
@@ -67,11 +64,13 @@ export default function CardWithForm() {
       console.log(error);
       setLoading(false);
     }
-  }
+  };
 
   return (
     <>
-      <div className="pt-10 pl-10"><ReturnButton ruta="/usuario"/></div>
+      <div className="pt-10 pl-10">
+        <ReturnButton ruta="/usuario" />
+      </div>
       <div className="flex justify-center mt-8 sm:mt-4">
         <Card className="w-full mx-10 sm:w-[400px]">
           <CardHeader>
@@ -82,7 +81,6 @@ export default function CardWithForm() {
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 <div className="flex flex-col w-full gap-4 sm:flex-row">
-
                   <FormField
                     control={form.control}
                     name="address"
@@ -102,7 +100,9 @@ export default function CardWithForm() {
                   <Button variant="outline" onClick={e => handleClick(e)}>
                     Reset
                   </Button>
-                  <Button type="submit" disabled={loading}>{loading ? 'Buscando...' : 'Buscar'}</Button>
+                  <Button type="submit" disabled={loading}>
+                    {loading ? "Buscando..." : "Buscar"}
+                  </Button>
                 </div>
               </form>
             </Form>

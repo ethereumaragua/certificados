@@ -1,27 +1,17 @@
-"use client"
+"use client";
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Button } from "~~/components/ui/button"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "~~/components/ui/form"
-import { Input } from "~~/components/ui/input"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Button } from "~~/components/ui/button";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "~~/components/ui/form";
+import { Input } from "~~/components/ui/input";
 import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
 const formSchema = z.object({
-  admin: z
-    .string()
-    .length(42, {
-      message: "El address debe tener 42 caracteres.",
-    }),
+  admin: z.string().length(42, {
+    message: "El address debe tener 42 caracteres.",
+  }),
   nombre: z
     .string()
     .min(2, {
@@ -30,12 +20,11 @@ const formSchema = z.object({
     .max(64, {
       message: "Nombre no debe tener más de 64 caracteres.",
     }),
-})
+});
 
-type FormValores = z.infer<typeof formSchema>
+type FormValores = z.infer<typeof formSchema>;
 
 export function Componente() {
-
   const { writeContractAsync: modificarNombreAdmin } = useScaffoldWriteContract("Certificados");
 
   const transaccion = async (admin: string, nombre: string) => {
@@ -69,10 +58,10 @@ export function Componente() {
       nombre: "",
     },
     mode: "onSubmit",
-  })
+  });
 
   function onSubmit(data: FormValores) {
-    console.log(JSON.stringify(data, null, 2))
+    console.log(JSON.stringify(data, null, 2));
     transaccion(data.admin, data.nombre);
   }
 
@@ -88,9 +77,7 @@ export function Componente() {
               <FormControl>
                 <Input placeholder="0x123..." {...field} />
               </FormControl>
-              <FormDescription>
-                Esta es la dirección ethereum del Admin.
-              </FormDescription>
+              <FormDescription>Esta es la dirección ethereum del Admin.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -104,9 +91,7 @@ export function Componente() {
               <FormControl>
                 <Input placeholder="Administrador..." {...field} />
               </FormControl>
-              <FormDescription>
-                Este es el nombre con el que aparecerá el Admin.
-              </FormDescription>
+              <FormDescription>Este es el nombre con el que aparecerá el Admin.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -114,5 +99,5 @@ export function Componente() {
         <Button type="submit">Modificar Nombre Admin</Button>
       </form>
     </Form>
-  )
+  );
 }

@@ -1,19 +1,13 @@
-"use client"
+"use client";
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useEffect, useState } from "react"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Button } from "~~/components/ui/button"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "~~/components/ui/form"
+import { useCallback, useEffect, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import Paises from "~~/components/common/paises";
+import { Button } from "~~/components/ui/button";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "~~/components/ui/form";
+import { Input } from "~~/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -22,40 +16,32 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "~~/components/ui/select"
-import { Input } from "~~/components/ui/input"
+} from "~~/components/ui/select";
 import { useScaffoldContract, useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
-import Paises from "~~/components/common/paises";
-
 
 const formSchema = z.object({
-  categoria: z
-    .string({
-      required_error: "Por favor seleccione una categoría.",
-    }),
-  curso: z
-    .string({
-      required_error: "Por favor seleccione un curso.",
-    }),
-  pais: z
-    .string().min(1, {
-      message: "Selecciona un País.",
-    }),
-  id: z
-    .string().min(1, {
-      message: "ID debe tener al menos 1 caracter.",
-    }),
-})
+  categoria: z.string({
+    required_error: "Por favor seleccione una categoría.",
+  }),
+  curso: z.string({
+    required_error: "Por favor seleccione un curso.",
+  }),
+  pais: z.string().min(1, {
+    message: "Selecciona un País.",
+  }),
+  id: z.string().min(1, {
+    message: "ID debe tener al menos 1 caracter.",
+  }),
+});
 
-type FormValores = z.infer<typeof formSchema>
+type FormValores = z.infer<typeof formSchema>;
 
 export function Componente() {
-
   const [mounted, setMounted] = useState(false);
   const [arregloCategorias, setArregloCategorias] = useState<any>();
   const [arregloCursos, setArregloCursos] = useState<any>();
   const [catSeleccionada, setCatSeleccionada] = useState<any>();
-  
+
   const { data: mostrarArregloDeCategorias }: { data: any } = useScaffoldReadContract({
     contractName: "Certificados",
     functionName: "mostrarArregloDeCategorias",
@@ -70,31 +56,34 @@ export function Componente() {
     contractName: "Certificados",
   });
 
-  const dataCursos = async(categoria:number, cantidadCursos:number) => {
-    let arr:any = [];
-      for(let j = 0; j < cantidadCursos; j++) {
-        try{
-          let a = await certificadosContract?.read.mapCurso([BigInt(categoria), BigInt(j)]);
-          if(a) arr.push(a);
+  const dataCursos = useCallback(
+    async (categoria: number, cantidadCursos: number) => {
+      const arr: any = [];
+      for (let j = 0; j < cantidadCursos; j++) {
+        try {
+          const a = await certificadosContract?.read.mapCurso([BigInt(categoria), BigInt(j)]);
+          if (a) arr.push(a);
         } catch (error) {
           console.log(error);
         }
-    }
-    console.log(arr);
-    setArregloCursos(arr);
-  }
+      }
+      console.log(arr);
+      setArregloCursos(arr);
+    },
+    [certificadosContract, setArregloCursos],
+  );
 
   useEffect(() => {
-    if(!mostrarArregloDeCategorias) return
+    if (!mostrarArregloDeCategorias) return;
     setMounted(true);
     setArregloCategorias(mostrarArregloDeCategorias);
     console.log(mostrarArregloDeCategorias);
   }, [mostrarArregloDeCategorias]);
 
   useEffect(() => {
-    if(!catSeleccionada) return
+    if (!catSeleccionada) return;
     dataCursos(catSeleccionada, mostrarArregloCursosPorCategoria[catSeleccionada]);
-  }, [catSeleccionada]);
+  }, [catSeleccionada, dataCursos, mostrarArregloCursosPorCategoria]);
 
   const { writeContractAsync: eliminarCertificadoId } = useScaffoldWriteContract("Certificados");
 
@@ -126,10 +115,10 @@ export function Componente() {
       id: "",
     },
     mode: "onSubmit",
-  })
+  });
 
   function onSubmit(data: FormValores) {
-    console.log(JSON.stringify(data, null, 2))
+    console.log(JSON.stringify(data, null, 2));
 
     transaccion(data.pais, data.id, Number(data.categoria), Number(data.curso));
   }
@@ -142,18 +131,22 @@ export function Componente() {
             control={form.control}
             name="categoria"
             render={({ field }) => (
-              <FormItem onChange={(e:any) => {
+              <FormItem
+                onChange={(e: any) => {
                   setCatSeleccionada(e.target.value);
-                }}>
+                }}
+              >
                 <FormLabel>Categoria</FormLabel>
                 <FormControl>
-                  <Select onValueChange={field.onChange} defaultValue={field.value} >
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Categoría" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        <SelectLabel>{arregloCategorias && arregloCategorias.length > 0 ? "Categorías" : "Sin Categorías"}</SelectLabel>
+                        <SelectLabel>
+                          {arregloCategorias && arregloCategorias.length > 0 ? "Categorías" : "Sin Categorías"}
+                        </SelectLabel>
                         {arregloCategorias.map((categoria: any, index: number) => (
                           <SelectItem key={index} value={index.toString()}>
                             {categoria.nombre}
@@ -163,14 +156,12 @@ export function Componente() {
                     </SelectContent>
                   </Select>
                 </FormControl>
-                <FormDescription>
-                  Esta es la Categoría del Curso.
-                </FormDescription>
+                <FormDescription>Esta es la Categoría del Curso.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
-          
+
           <FormField
             control={form.control}
             name="curso"
@@ -185,20 +176,18 @@ export function Componente() {
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>{arregloCursos && arregloCursos.length > 0 ? "Cursos" : "Sin Cursos"}</SelectLabel>
-                        {arregloCursos && arregloCursos.length > 0 &&
+                        {arregloCursos &&
+                          arregloCursos.length > 0 &&
                           arregloCursos.map((curso: any, index: number) => (
                             <SelectItem key={index} value={index.toString()}>
                               {curso[0]} | {Number(curso[2])} horas | {curso[5] ? "Abierto" : "Cerrado"}
                             </SelectItem>
-                          ))
-                        }
+                          ))}
                       </SelectGroup>
                     </SelectContent>
                   </Select>
                 </FormControl>
-                <FormDescription>
-                  Este es el Curso.
-                </FormDescription>
+                <FormDescription>Este es el Curso.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -227,10 +216,8 @@ export function Componente() {
                   <FormLabel>País del Usuario</FormLabel>
                   <FormControl>
                     <Paises valor={field.value} setValor={field.onChange} />
-                    </FormControl>
-                  <FormDescription>
-                    País de origen del Usuario.
-                  </FormDescription>
+                  </FormControl>
+                  <FormDescription>País de origen del Usuario.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -245,9 +232,7 @@ export function Componente() {
                   <FormControl>
                     <Input placeholder="123..." {...field} />
                   </FormControl>
-                  <FormDescription>
-                    Identificador del Usuario.
-                  </FormDescription>
+                  <FormDescription>Identificador del Usuario.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -257,6 +242,6 @@ export function Componente() {
           <Button type="submit">Eliminar Certificado del Usuario</Button>
         </form>
       </Form>
-    )
+    );
   }
 }
