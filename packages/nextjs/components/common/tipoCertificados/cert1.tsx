@@ -1,5 +1,6 @@
-import React from "react";
-import Image from "next/image";
+"use client";
+
+import { useEffect, useState } from "react";
 import QRCode from "react-qr-code";
 import { Address } from "~~/components/scaffold-eth";
 
@@ -28,9 +29,9 @@ const Cert1: React.FC<DiplomaProps> = ({
   fecha,
   nombreCertificador,
 }) => {
-  const [location, setLocation] = React.useState("");
+  const [location, setLocation] = useState("");
 
-  React.useEffect(() => {
+  useEffect(() => {
     setTimeout(function () {
       setLocation(window.location.href);
     }, 1000);

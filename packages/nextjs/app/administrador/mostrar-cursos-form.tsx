@@ -68,7 +68,7 @@ export function Componente() {
         setArregloCursos(aux);
       }
     }
-  }, [events1, events2, mounted, arregloCursos]);
+  }, [events1, events2]);
 
   useEffect(() => {
     if (!mostrarArregloDeCategorias) return;

@@ -62,7 +62,7 @@ export function Componente() {
         setArregloCursos(aux);
       }
     }
-  }, [events1, events2, connectedAddress, arregloCursos, mounted]);
+  }, [events1, events2, connectedAddress]);
 
   useEffect(() => {
     if (!mostrarArregloDeCategorias) return;

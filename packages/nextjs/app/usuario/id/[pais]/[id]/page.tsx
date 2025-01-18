@@ -83,13 +83,13 @@ const usePage = ({ params }: { params: { pais: number; id: number } }) => {
 
   useEffect(() => {
     if (certificados.length > 0) refetchEvents();
-  }, [certificados, refetchEvents]);
+  }, [certificados]);
 
   useEffect(() => {
     if (certs && certSelected && !dialogOpen) {
       setDialogOpen(true);
     }
-  }, [certs, certSelected, dialogOpen]);
+  }, [certs, certSelected]);
 
   const { data: certificadosContract } = useScaffoldContract({
     contractName: "Certificados",
@@ -140,7 +140,7 @@ const usePage = ({ params }: { params: { pais: number; id: number } }) => {
       setPoseeCertificados(true);
       estaCertificado();
     }
-  }, [datosYCertificadosUsuario, estaCertificado]);
+  }, [datosYCertificadosUsuario]);
 
   const { targetNetwork } = useTargetNetwork();
 
