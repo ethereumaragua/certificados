@@ -56,7 +56,7 @@ const usePage = ({ params }: { params: { pais: number; id: number } }) => {
   const { data: events, refetch: refetchEvents } = useScaffoldEventHistory({
     contractName: "Certificados",
     eventName: "LogCertificado",
-    fromBlock: 0n,
+    fromBlock: 3170714n,
     filters: {
       idCertificado: certificados.map((certificado: any) => certificado[2].idCertificado),
     },
