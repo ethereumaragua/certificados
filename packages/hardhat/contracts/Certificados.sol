@@ -24,6 +24,8 @@ contract Certificados is Cursos {
 
   mapping(Pais => mapping(uint usuario => EstructuraUsuario)) public mapUsuario;
 
+  constructor(address _superAdmin, address[] memory _admins, string[] memory _nombres) Cursos(_superAdmin, _admins, _nombres) {}
+
   function datosYCertificadosUsuario(Pais pais, uint usuario) public view returns (EstructuraCursoUsuario[] memory, string memory) {
     return (mapUsuario[pais][usuario].arregloCursosUsuario, mapUsuario[pais][usuario].nombre);
   }

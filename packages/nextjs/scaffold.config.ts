@@ -12,7 +12,8 @@ const scaffoldConfig = {
   // The networks on which your DApp is live
   targetNetworks: [
     // chains.hardhat,
-    chains.holesky,
+    //chains.baseSepolia,
+    chains.scroll,
   ],
 
   // The interval at which your front-end polls the RPC servers for new data

@@ -16,14 +16,16 @@ contract Cursos is Admin {
   
   EstructuraCategoria[] public arregloCategorias;
 
-  function crearCategoria(string calldata nombre) public onlyRole(ADMIN) {
+  constructor(address _superAdmin, address[] memory _admins, string[] memory _nombres) Admin(_superAdmin, _admins, _nombres) {}
+
+  function crearCategoria(string calldata nombre) public onlyRole(ADMIN_ROLE) {
     uint categoria = arregloCategorias.length;
     arregloCategorias.push(EstructuraCategoria({nombre: nombre, activa: true}));
     arregloCursosPorCategoria.push(0);
     emit LogCategoriaCreada(msg.sender, categoria, nombre, true);
   }
 
-  function modificarCategoria(uint categoria, string calldata nombre, bool estado) public onlyRole(ADMIN) {
+  function modificarCategoria(uint categoria, string calldata nombre, bool estado) public onlyRole(ADMIN_ROLE) {
     require(categoria < arregloCategorias.length, "Categoria no existe");
     EstructuraCategoria memory registro = EstructuraCategoria({nombre: nombre, activa: estado});
     arregloCategorias[categoria] = registro;
@@ -52,7 +54,7 @@ contract Cursos is Admin {
   mapping(uint categoria => mapping(uint curso => EstructuraCurso)) public mapCurso;
 
   function agregarCurso(uint categoria, string calldata nombreCurso, string calldata descripcion, uint duracion, uint8 tipoCertificado, address certificador, bool activo)
-    public onlyRole(ADMIN)
+    public onlyRole(ADMIN_ROLE)
   {
     require(arregloCategorias[categoria].activa, "Categoria no activa");
     require(certificador != address(0), "Address certificador incorrecta");
@@ -63,7 +65,7 @@ contract Cursos is Admin {
   }
 
   function modificarCurso(uint categoria, uint curso, string calldata nombreCurso, string calldata descripcion, uint duracion, uint8 tipoCertificado, address certificador, bool activo)
-    public onlyRole(ADMIN)
+    public onlyRole(ADMIN_ROLE)
   {
     require (mapCurso[categoria][curso].certificador != address(0), "Curso no existe");
     require(certificador != address(0), "Address certificador incorrecta");

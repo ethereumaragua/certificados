@@ -29,6 +29,10 @@ const sidebarNavItems = [
     title: "Modificar Cuenta Admin",
     href: "/superadmin/modificar-cuenta-admin",
   },
+  {
+    title: "Transferir Super Admin",
+    href: "/superadmin/transferir-superadmin",
+  },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
