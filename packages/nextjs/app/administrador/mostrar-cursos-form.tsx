@@ -29,13 +29,13 @@ export function Componente() {
   const { data: events1 } = useScaffoldEventHistory({
     contractName: "Certificados",
     eventName: "LogCursoCreado",
-    fromBlock: 3170714n,
+    fromBlock: 12892335n,
   });
 
   const { data: events2 } = useScaffoldEventHistory({
     contractName: "Certificados",
     eventName: "LogCursoModificado",
-    fromBlock: 3170714n,
+    fromBlock: 12892335n,
   });
 
   useEffect(() => {
